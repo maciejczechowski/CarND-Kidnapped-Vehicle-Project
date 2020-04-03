@@ -11,6 +11,8 @@
 
 #include <string>
 #include <vector>
+#include <map>
+#include <random>
 #include "helper_functions.h"
 
 struct Particle {
@@ -29,7 +31,7 @@ class ParticleFilter {
  public:
   // Constructor
   // @param num_particles Number of particles
-  ParticleFilter() : num_particles(0), is_initialized(false) {}
+  ParticleFilter(int number_of_particles = 50) : num_particles(number_of_particles), is_initialized(false) {}
 
   // Destructor
   ~ParticleFilter() {}
@@ -63,7 +65,7 @@ class ParticleFilter {
    * @param predicted Vector of predicted landmark observations
    * @param observations Vector of landmark observations
    */
-  void dataAssociation(std::vector<LandmarkObs> predicted, 
+  void dataAssociation(const std::vector<LandmarkObs>& predicted,
                        std::vector<LandmarkObs>& observations);
   
   /**
@@ -112,6 +114,7 @@ class ParticleFilter {
   std::vector<Particle> particles;
 
  private:
+  std::default_random_engine gen;
   // Number of particles to draw
   int num_particles; 
   
@@ -119,7 +122,18 @@ class ParticleFilter {
   bool is_initialized;
   
   // Vector of weights of all particles
-  std::vector<double> weights; 
+  std::vector<double> weights;
+
+  //Flag if we hashed the map
+  bool has_map_of_landmarks;
+
+  std::map<int, Map::single_landmark_s> map_of_landmarks;
+
+  //converts observations from car to map coordinates
+  std::vector<LandmarkObs>  convertToMapCoordiates(const std::vector<LandmarkObs> &observations, const Particle &particle);
+
+
+  double addNoise(double x, double std);
 };
 
 #endif  // PARTICLE_FILTER_H_
