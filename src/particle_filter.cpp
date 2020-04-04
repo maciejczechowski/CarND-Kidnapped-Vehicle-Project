@@ -89,7 +89,7 @@ void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
 
 
     weights.clear();
-    double meas_error = sqrt(std_landmark[0] * std_landmark[0] + std_landmark[1] + std_landmark[1]);
+    double meas_error = sqrt(std_landmark[0] * std_landmark[0] + std_landmark[1] * std_landmark[1]);
     // iterate over particle
     for (auto &&particle: particles) {
 
