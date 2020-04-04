@@ -154,7 +154,7 @@ vector<LandmarkObs> ParticleFilter::convertToMapCoordiates(const vector<Landmark
 void ParticleFilter::resample() {
 
     std::vector<Particle> p3 = {};
-    std::discrete_distribution<double> distribution(weights.begin(), weights.end());
+    std::discrete_distribution<> distribution(weights.begin(), weights.end());
 
     for (int i = 0; i < num_particles; i++) {
         int index = distribution(gen);
