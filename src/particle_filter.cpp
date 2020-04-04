@@ -38,7 +38,7 @@ void ParticleFilter::prediction(double delta_t, double std_pos[],
 
     for (auto &&particle: particles) {
         double xf, yf, thetaf;
-        if (abs(yaw_rate) > std::numeric_limits<double>::epsilon()) {
+        if (fabs(yaw_rate) > std::numeric_limits<double>::epsilon()) {
             xf = particle.x + (velocity / yaw_rate) * (sin(particle.theta + yaw_rate * delta_t) - sin(particle.theta));
             yf = particle.y + (velocity / yaw_rate) * (cos(particle.theta) - cos(particle.theta + yaw_rate * delta_t));
             thetaf = particle.theta + yaw_rate * delta_t;
